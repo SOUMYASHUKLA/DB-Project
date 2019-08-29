@@ -1,0 +1,129 @@
+<html>
+  <head>
+    <style type='text/css'>
+
+
+
+label {
+  float:left;
+  width:7em;}
+
+
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: #111;
+}
+
+.active {
+    background-color: #4CAF50;
+}
+
+
+
+</style>
+  </head>
+
+  <body style="background-color:E8CC56;">
+
+    <h3 align="center">University Grade Management System - UGMS</h3>
+
+   <ul>
+      <li><a class="Home" href="http://localhost:8888/ugms/Student/Student_HomePage.php">Home</a></li>
+      <li><a href="http://localhost:8888/ugms/Student/Student_GradePage.php">View Grades</a></li>
+      <li><a href="http://localhost:8888/ugms/Student/Student_UpdateInfo.php">Update Info</a></li>
+      <li><a href="http://localhost:8888/ugms/Student/Student_MarkingPage.php">Marking</a></li>
+      <li style="float:right"><a class="active" href="#logout">Logout</a>
+      </li>
+    </ul>
+    
+    <div class="container">
+      <form action="Student_GradePage.php" method="POST">
+        <?php
+
+        $conn = new mysqli("localhost", "root", "root", "UGMS_DB");
+        if ($conn->connect_error) {
+           die("Connection failed: " . $conn->connect_error);
+          } 
+
+          $coursesql= "SELECT * from Student_Enrolment where SID = 1000";
+          $res = $conn->query($coursesql);
+          $r = $res->fetch_assoc();
+         
+         // $courseID = $conn->query("SELECT CID from Student_Enrolment where SID=1000");
+         // $cid=$courseID->fetch_assoc();
+
+          $cnamesql= "SELECT * from course where CID in (SELECT CID from Student_Enrolment where SID=1000)";
+         // $cnamesql= "SELECT * from course where CID in ("$cid")";
+          $cres = $conn->query($cnamesql);
+          $cr= $cres->fetch_assoc();
+
+         $asgnsql ="SELECT * from Assignment_Mark where SID =1000 and CID IN 
+                      (SELECT CID from Student_Enrolment where SID=1000)";
+          $resasql = $conn->query($asgnsql);
+
+            /*
+                 echo "<table border = '1'>";
+                 echo"<tr>";
+                 echo"<th>"."Task Type"."</th>";
+                 echo"<th>"."Marks Obtained"."</th>";
+                 echo"</tr>";
+              */
+
+          while($r = $res->fetch_assoc() and 
+                $cr= $cres->fetch_assoc()
+                )
+          {
+                 echo "<p>"."Course Details : ".$r["CID"];
+                 echo ", ".$cr["Cname"]."</p>";
+
+              while(
+                    $ar =  $resasql->fetch_assoc()
+                  )
+              {
+               echo "<table border = '1'>";
+                 echo"<tr>";
+                 echo"<th>"."Task Type"."</th>";
+                 echo"<th>"."Marks Obtained"."</th>";
+                 echo"</tr>";
+              
+
+                 echo"<tr>";
+                 echo"<th>".$ar["Task_Type"]."</th>";
+                 echo"<th>".$ar["Marks"]."</th>";
+                 echo"</tr>";
+              }
+          }
+
+          $conn->close();       
+  
+         ?> 
+          </table>
+
+      </form>
+    </div>
+
+
+
+
+  </body>
+</html>
