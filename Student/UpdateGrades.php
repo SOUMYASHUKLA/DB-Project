@@ -20,7 +20,6 @@
 
               $sql = 'SELECT * from Student_Enrolment WHERE SID =1000';
               $result = $conn->query($sql);
-              //echo $sql;
 
           ?>
           <p>
@@ -84,8 +83,6 @@
                       <a href="ViewGrades.php" target="_blank">View</a>
                       <a href="EditGrades.html" target="_blank">Edit</a>
                     </td>
-
-                    <!--td><a href="https://www.thesitewizard.com/" target="_blank">Edit</a></td-->
                    </tr>
                    <!-- Conn obj not closed yet... -->
 
