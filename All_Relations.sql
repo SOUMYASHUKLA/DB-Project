@@ -1,6 +1,9 @@
+
+
+CREATE DATABSE UGMS_DB;
+
 USE UGMS_DB;
 
--- Fatima
 CREATE TABLE Instructor (
     IID INT(9),
     Fname VARCHAR(20) NOT NULL,
@@ -37,7 +40,7 @@ CREATE TABLE Assignment_Mark (
     FOREIGN KEY (CID) REFERENCES Course(CID)
 );
 
--- Gursimran
+
 CREATE TABLE Student
 (
 SID INT(9),
@@ -96,7 +99,7 @@ CREATE TABLE Admin_Auth
     FOREIGN KEY (AID) REFERENCES Admin(AID)
 );
 
--- Soumya
+
 
 CREATE TABLE Student_Enrolment
 (
