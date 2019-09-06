@@ -3,8 +3,6 @@
     <style type='text/css'>
 
 
-
-
 label {
   float:left;
   width:7em;}
